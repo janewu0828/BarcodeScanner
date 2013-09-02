@@ -68,6 +68,7 @@
 }, false);
 
   function scannerPlugin() {
+    alert("scannerPlugin");
     var scanner = cordova.require("cordova/plugin/BarcodeScanner");
 
     scanner.scan(
@@ -84,6 +85,7 @@
   }
 
   function scannerEncode()
+    alert("scannerEncode()");
     var scanner = cordova.require("cordova/plugin/BarcodeScanner");
 
     scanner.encode(BarcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com", function(success) {
