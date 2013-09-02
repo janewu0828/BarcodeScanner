@@ -50,26 +50,55 @@
 
   <script type="text/javascript">
 
-      document.addEventListener('deviceready', function () {
+  document.addEventListener('deviceready', function () {
 
-                  // Once root is set up, fire off tests
-                  var jasmineEnv = jasmine.getEnv();
-                  jasmineEnv.updateInterval = 1000;
+  // Once root is set up, fire off tests
+  var jasmineEnv = jasmine.getEnv();
+  jasmineEnv.updateInterval = 1000;
 
-                  var htmlReporter = new jasmine.HtmlReporter();
+  var htmlReporter = new jasmine.HtmlReporter();
 
-                  jasmineEnv.addReporter(htmlReporter);
+  jasmineEnv.addReporter(htmlReporter);
 
-                  jasmineEnv.specFilter = function(spec) {
-                    return htmlReporter.specFilter(spec);
-                  };
+  jasmineEnv.specFilter = function(spec) {
+    return htmlReporter.specFilter(spec);
+  };
 
-                  jasmineEnv.execute();
-      }, false);
-  </script>
+  jasmineEnv.execute();
+}, false);
+
+  function scannerPlugin() {
+    var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+
+    scanner.scan(
+      function (result) {
+        alert("We got a barcode\n" +
+          "Result: " + result.text + "\n" +
+          "Format: " + result.format + "\n" +
+          "Cancelled: " + result.cancelled);
+      }, 
+      function (error) {
+        alert("Scanning failed: " + error);
+      }
+      );
+  }
+
+  function scannerEncode()
+    var scanner = cordova.require("cordova/plugin/BarcodeScanner");
+
+    scanner.encode(BarcodeScanner.Encode.TEXT_TYPE, "http://www.nytimes.com", function(success) {
+      alert("encode success: " + success);
+    }, function(fail) {
+      alert("encoding failed: " + fail);
+    }
+    );
+  }
+</script>
 </head>
 
 <body>
   <a href="javascript:" class="backBtn" onclick="backHome();">Back</a>
+  <button type="button" onclick="scannerPlugin()">Using the plugin</button>
+  <button type="button" onclick="scannerEncode()">Encoding a Barcode</button>
 </body>
 </html>
